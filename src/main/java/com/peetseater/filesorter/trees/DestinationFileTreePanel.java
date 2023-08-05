@@ -28,5 +28,4 @@ public class DestinationFileTreePanel extends AbstractFileTreePanel implements T
             imagePanel.setDestinationPath(fileToMove.getPathToFile());
         }
     }
-    
 }

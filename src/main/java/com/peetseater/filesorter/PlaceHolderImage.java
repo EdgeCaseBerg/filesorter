@@ -9,9 +9,9 @@ import java.awt.Graphics2D;
 import javax.swing.ImageIcon;
 
 class PlaceHolderImage extends ImageIcon {
-    private int width = 32;
-    private int height = 32;
-    private BasicStroke stroke = new BasicStroke(4);
+    protected int width = 32;
+    protected int height = 32;
+    private transient BasicStroke stroke = new BasicStroke(4);
 
     public PlaceHolderImage(int width, int height) {
         this.width = width;
@@ -19,7 +19,7 @@ class PlaceHolderImage extends ImageIcon {
     }
 
     @Override
-    public void paintIcon(Component c, Graphics g, int x, int y) {
+    public synchronized void paintIcon(Component c, Graphics g, int x, int y) {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(Color.WHITE);
         g2d.fillRect(x +1 ,y + 1,width -2 ,height -2);

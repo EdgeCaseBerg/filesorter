@@ -35,5 +35,4 @@ public class SourcesFileTreePanel extends AbstractFileTreePanel implements TreeS
             }
         }
     }
-    
 }

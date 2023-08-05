@@ -6,18 +6,14 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-
-import com.peetseater.AppLogger;
 import com.peetseater.filesorter.trees.AbstractFileTreePanel;
 import com.peetseater.filesorter.trees.DestinationFileTreePanel;
 import com.peetseater.filesorter.trees.SourcesFileTreePanel;
 
 public class DesktopApplication extends JFrame {
 
-    AbstractFileTreePanel sourcesPanel;// = new FileTreePanel("Load sources");
-    AbstractFileTreePanel destinationPanel;// = new FileTreePanel("Load destinations");
+    AbstractFileTreePanel sourcesPanel;
+    AbstractFileTreePanel destinationPanel;
     ImagePanel imagePanel;
 
     public DesktopApplication() {

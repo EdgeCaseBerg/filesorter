@@ -18,9 +18,9 @@ import com.peetseater.AppLogger;
 
 public class ImagePanel extends JPanel implements ActionListener {
     JLabel imageContainerLabel;
-    Path destinationPath;
-    Path currentImagePath;
     JLabel statusLabel;
+    transient Path destinationPath;
+    transient Path currentImagePath;
 
     public ImagePanel() {
         imageContainerLabel = new JLabel();
@@ -48,7 +48,7 @@ public class ImagePanel extends JPanel implements ActionListener {
     }
 
     private ImageIcon scaleIcon(ImageIcon imageIcon, int width, int height) {
-        Image scaledImage = imageIcon.getImage().getScaledInstance(1080, 720, Image.SCALE_SMOOTH);
+        Image scaledImage = imageIcon.getImage().getScaledInstance(width, -1, Image.SCALE_SMOOTH);
         return new ImageIcon(scaledImage);
     }
 
