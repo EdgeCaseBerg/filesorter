@@ -16,7 +16,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -26,22 +25,6 @@ import com.peetseater.AppLogger;
 
 class FileTreePanel extends JPanel implements ActionListener, FileVisitor<Path> {
 
-    //TODO we'll probably pass this in via constructor or something
-    private final class TreeSelectionListenerImplementation implements TreeSelectionListener {
-        public void valueChanged(TreeSelectionEvent e) {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) jTree.getLastSelectedPathComponent();
-            if (node == null) {
-                return;
-            }
-
-            if (node.isLeaf()) {
-                AppLogger.info("is leaf");
-            } else {
-                AppLogger.info("not leaf");
-            }
-        }
-    }
-
     JButton browseButton = new JButton("Browse");
     DefaultMutableTreeNode rootNode;
     JTree jTree;
@@ -49,7 +32,7 @@ class FileTreePanel extends JPanel implements ActionListener, FileVisitor<Path> 
     DefaultTreeModel treeModel;
     JFileChooser jFileChooser;
     
-    public FileTreePanel(String browseText) {
+    public FileTreePanel(String browseText, TreeSelectionListener treeSelectionListener) {
         this.browseText = browseText;
         this.rootNode = new DefaultMutableTreeNode("Press the button");
         this.treeModel = new DefaultTreeModel(this.rootNode);
@@ -63,7 +46,7 @@ class FileTreePanel extends JPanel implements ActionListener, FileVisitor<Path> 
         jTree.setEditable(false);
         jTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         jTree.setShowsRootHandles(true);
-        jTree.addTreeSelectionListener(new TreeSelectionListenerImplementation());
+        jTree.addTreeSelectionListener(treeSelectionListener);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(browseButton);

@@ -3,7 +3,10 @@ package com.peetseater.filesorter;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,7 +31,8 @@ public class ImagePanel extends JPanel {
         add(moveButton, BorderLayout.PAGE_START);
     }
 
-    void setImage(ImageIcon newImage) {
+    void setImage(Path imagePath) throws IOException {
+        ImageIcon newImage = new ImageIcon(Files.readAllBytes(imagePath));
         imageContainerLabel.setIcon(scaleIcon(newImage, getWidth(), getHeight()));
     }
 
