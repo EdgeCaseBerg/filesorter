@@ -3,6 +3,8 @@ package com.peetseater.filesorter;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.util.LinkedList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -21,6 +23,7 @@ public class ImagePanel extends JPanel implements ActionListener {
     JLabel statusLabel;
     transient Path destinationPath;
     transient Path currentImagePath;
+    transient List<Listener> listeners = new LinkedList<>();
 
     public ImagePanel() {
         imageContainerLabel = new JLabel();
@@ -38,6 +41,10 @@ public class ImagePanel extends JPanel implements ActionListener {
 
         statusLabel = new JLabel("...");
         add(statusLabel, BorderLayout.PAGE_END);
+    }
+
+    public void addListener(Listener listener) {
+        this.listeners.add(listener);
     }
 
     public void setImage(Path imagePath) throws IOException {
@@ -66,6 +73,9 @@ public class ImagePanel extends JPanel implements ActionListener {
                 // TODO handle duplicate name collision
                 Files.move(currentImagePath, destinationPath.resolve(currentImagePath.getFileName()), StandardCopyOption.ATOMIC_MOVE);
                 statusLabel.setText("Moved file to " + destinationPath.resolve(currentImagePath.getFileName()).toString());
+                for (Listener listener : listeners) {
+                    listener.doListenerAction();
+                }
             } catch (IOException ioException) {
                 AppLogger.warn(ioException);
             }
