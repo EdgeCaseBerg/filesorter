@@ -16,7 +16,7 @@ public class ImagePanel extends JPanel {
 
     public ImagePanel() {
         imageContainerLabel = new JLabel();
-        ImageIcon originalImage = new PlaceHolderImage(64, 64);
+        ImageIcon originalImage = new PlaceHolderImage(640, 640);
         imageContainerLabel.setIcon(originalImage);
         imageContainerLabel.setHorizontalAlignment(JLabel.CENTER);
         setPreferredSize(new Dimension(1080, 720));
@@ -33,7 +33,7 @@ public class ImagePanel extends JPanel {
     }
 
     private ImageIcon scaleIcon(ImageIcon imageIcon, int width, int height) {
-        Image scaledImage = imageIcon.getImage().getScaledInstance(200, 50, Image.SCALE_SMOOTH);
+        Image scaledImage = imageIcon.getImage().getScaledInstance(1080, 720, Image.SCALE_SMOOTH);
         return new ImageIcon(scaledImage);
     }
 }
