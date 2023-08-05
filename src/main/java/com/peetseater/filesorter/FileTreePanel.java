@@ -122,6 +122,7 @@ class FileTreePanel extends JPanel implements ActionListener, FileVisitor<Path> 
 
     @Override
     public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+        AppLogger.warn(exc);
         throw exc;
     }
 
