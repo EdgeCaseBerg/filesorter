@@ -11,7 +11,7 @@ public class DestinationFileTreePanel extends AbstractFileTreePanel implements T
     ImagePanel imagePanel;
 
     public DestinationFileTreePanel(String browseText, ImagePanel imagePanel) {
-        super(browseText);
+        super(browseText, true);
         this.imagePanel = imagePanel;
         jTree.addTreeSelectionListener(this);        
     }
@@ -23,9 +23,7 @@ public class DestinationFileTreePanel extends AbstractFileTreePanel implements T
             return;
         }
 
-        if (node.isLeaf()) {
-            FileToMove fileToMove = (FileToMove) node.getUserObject();
-            imagePanel.setDestinationPath(fileToMove.getPathToFile());
-        }
+        FileToMove fileToMove = (FileToMove) node.getUserObject();
+        imagePanel.setDestinationPath(fileToMove.getPathToFile());
     }
 }

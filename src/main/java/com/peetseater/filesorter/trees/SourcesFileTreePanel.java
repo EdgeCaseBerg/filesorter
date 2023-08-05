@@ -14,7 +14,7 @@ public class SourcesFileTreePanel extends AbstractFileTreePanel implements TreeS
     ImagePanel imagePanel;
 
     public SourcesFileTreePanel(String browseText, ImagePanel imagePanel) {
-        super(browseText);
+        super(browseText, false);
         this.imagePanel = imagePanel;
         jTree.addTreeSelectionListener(this);        
     }

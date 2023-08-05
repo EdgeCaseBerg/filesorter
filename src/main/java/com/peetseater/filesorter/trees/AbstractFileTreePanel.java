@@ -31,14 +31,16 @@ public abstract class AbstractFileTreePanel extends JPanel implements ActionList
     String browseText;
     DefaultTreeModel treeModel;
     JFileChooser jFileChooser;
+    boolean onlyIncludeDirectories;
     
-    protected AbstractFileTreePanel(String browseText) {
+    protected AbstractFileTreePanel(String browseText, boolean onlyIncludeDirectories) {
         this.browseText = browseText;
         this.rootNode = new DefaultMutableTreeNode("Press the button");
         this.treeModel = new DefaultTreeModel(this.rootNode);
         this.jTree = new JTree(treeModel);
         this.jFileChooser = new JFileChooser();
         this.jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        this.onlyIncludeDirectories = onlyIncludeDirectories;
 
         this.browseButton.setText(browseText);
         JScrollPane scrollPane = new JScrollPane(jTree);
@@ -96,6 +98,9 @@ public abstract class AbstractFileTreePanel extends JPanel implements ActionList
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+        if (onlyIncludeDirectories) {
+            return FileVisitResult.CONTINUE;
+        }
         DefaultMutableTreeNode newChild = new DefaultMutableTreeNode();
         newChild.setUserObject(new FileToMove(file, file.getFileName().toString()));
         newChild.setAllowsChildren(false);
