@@ -10,11 +10,14 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 
 import com.peetseater.AppLogger;
+import com.peetseater.filesorter.trees.AbstractFileTreePanel;
+import com.peetseater.filesorter.trees.DestinationFileTreePanel;
+import com.peetseater.filesorter.trees.SourcesFileTreePanel;
 
 public class DesktopApplication extends JFrame {
 
-    FileTreePanel sourcesPanel;// = new FileTreePanel("Load sources");
-    FileTreePanel destinationPanel;// = new FileTreePanel("Load destinations");
+    AbstractFileTreePanel sourcesPanel;// = new FileTreePanel("Load sources");
+    AbstractFileTreePanel destinationPanel;// = new FileTreePanel("Load destinations");
     ImagePanel imagePanel;
 
     public DesktopApplication() {
@@ -22,19 +25,8 @@ public class DesktopApplication extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         imagePanel = new ImagePanel();
-
-        // TODO maybe we subclass the panel instead of making a separate listener...
-        TreeSelectedChangeImageListener sourcesListener = new TreeSelectedChangeImageListener(destinationPanel, imagePanel);
-        sourcesPanel = new FileTreePanel("Load sources", sourcesListener);
-        sourcesListener.setFileTreePanel(sourcesPanel);
-
-        TreeSelectionListener destinationListener = new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-            }
-            
-        };
-        destinationPanel = new FileTreePanel("Load destinations", destinationListener);
+        sourcesPanel = new SourcesFileTreePanel("Load sources", imagePanel);
+        destinationPanel = new DestinationFileTreePanel("Load destinations", imagePanel);
 
         JSplitPane jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         JPanel trees = new JPanel(new GridLayout(2, 1));

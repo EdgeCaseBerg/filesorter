@@ -2,7 +2,7 @@ package com.peetseater.filesorter;
 
 import java.nio.file.Path;
 
-class FileToMove {
+public class FileToMove {
     Path pathToFile;
     String displayName;
     
@@ -14,5 +14,12 @@ class FileToMove {
     @Override
     public String toString() {
         return this.displayName;
+    }
+
+    public Path getPathToFile() {
+        return pathToFile;
+    }
+    public String getDisplayName() {
+        return displayName;
     }
 }

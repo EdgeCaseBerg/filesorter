@@ -1,4 +1,4 @@
-package com.peetseater.filesorter;
+package com.peetseater.filesorter.trees;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,14 +16,14 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import com.peetseater.AppLogger;
+import com.peetseater.filesorter.FileToMove;
 
-class FileTreePanel extends JPanel implements ActionListener, FileVisitor<Path> {
+public abstract class AbstractFileTreePanel extends JPanel implements ActionListener, FileVisitor<Path> {
 
     JButton browseButton = new JButton("Browse");
     DefaultMutableTreeNode rootNode;
@@ -32,7 +32,7 @@ class FileTreePanel extends JPanel implements ActionListener, FileVisitor<Path> 
     DefaultTreeModel treeModel;
     JFileChooser jFileChooser;
     
-    public FileTreePanel(String browseText, TreeSelectionListener treeSelectionListener) {
+    protected AbstractFileTreePanel(String browseText) {
         this.browseText = browseText;
         this.rootNode = new DefaultMutableTreeNode("Press the button");
         this.treeModel = new DefaultTreeModel(this.rootNode);
@@ -46,7 +46,7 @@ class FileTreePanel extends JPanel implements ActionListener, FileVisitor<Path> 
         jTree.setEditable(false);
         jTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         jTree.setShowsRootHandles(true);
-        jTree.addTreeSelectionListener(treeSelectionListener);
+        
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(browseButton);
