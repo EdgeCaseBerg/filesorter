@@ -41,6 +41,7 @@ public class ImagePanel extends JPanel implements ActionListener {
     }
 
     public void setImage(Path imagePath) throws IOException {
+        AppLogger.info("Set source image to " + imagePath);
         this.currentImagePath = imagePath;
         ImageIcon newImage = new ImageIcon(Files.readAllBytes(imagePath));
         imageContainerLabel.setIcon(scaleIcon(newImage, getWidth(), getHeight()));
@@ -53,6 +54,7 @@ public class ImagePanel extends JPanel implements ActionListener {
     }
 
     public void setDestinationPath(Path pathToFile) {
+        AppLogger.info("Set destination to " + pathToFile);
         this.destinationPath = pathToFile;
     }
 

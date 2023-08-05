@@ -83,7 +83,7 @@ public abstract class AbstractFileTreePanel extends JPanel implements ActionList
 
     @Override
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-        AppLogger.info("Visiting "+ dir);
+        AppLogger.trace("Visiting "+ dir);
         DefaultMutableTreeNode newChild = new DefaultMutableTreeNode();
         newChild.setUserObject(new FileToMove(dir, dir.getFileName().toString()));
         newChild.setAllowsChildren(true);

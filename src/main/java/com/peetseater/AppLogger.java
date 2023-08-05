@@ -24,4 +24,8 @@ public final class AppLogger {
         throwable.printStackTrace(pw);
         logger.publish(new LogRecord(Level.WARNING, sw.toString()));
     }
+
+    public static void trace(String string) {
+        logger.publish(new LogRecord(Level.FINEST, string));
+    }
 }
