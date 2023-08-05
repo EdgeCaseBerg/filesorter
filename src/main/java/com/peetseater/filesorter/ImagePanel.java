@@ -20,6 +20,7 @@ public class ImagePanel extends JPanel implements ActionListener {
     JLabel imageContainerLabel;
     Path destinationPath;
     Path currentImagePath;
+    JLabel statusLabel;
 
     public ImagePanel() {
         imageContainerLabel = new JLabel();
@@ -34,12 +35,16 @@ public class ImagePanel extends JPanel implements ActionListener {
         JButton moveButton = new JButton("Move");
         add(moveButton, BorderLayout.PAGE_START);
         moveButton.addActionListener(this);
+
+        statusLabel = new JLabel("...");
+        add(statusLabel, BorderLayout.PAGE_END);
     }
 
     public void setImage(Path imagePath) throws IOException {
         this.currentImagePath = imagePath;
         ImageIcon newImage = new ImageIcon(Files.readAllBytes(imagePath));
         imageContainerLabel.setIcon(scaleIcon(newImage, getWidth(), getHeight()));
+        statusLabel.setText(imagePath.toString());
     }
 
     private ImageIcon scaleIcon(ImageIcon imageIcon, int width, int height) {
@@ -56,7 +61,9 @@ public class ImagePanel extends JPanel implements ActionListener {
         AppLogger.info("Moving file from " + currentImagePath + " to " + destinationPath);
         if (currentImagePath != null && destinationPath != null) {
             try {
+                // TODO handle duplicate name collision
                 Files.move(currentImagePath, destinationPath.resolve(currentImagePath.getFileName()), StandardCopyOption.ATOMIC_MOVE);
+                statusLabel.setText("Moved file to " + destinationPath.resolve(currentImagePath.getFileName()).toString());
             } catch (IOException ioException) {
                 AppLogger.warn(ioException);
             }
