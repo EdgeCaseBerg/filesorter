@@ -13,13 +13,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+
 import com.peetseater.AppLogger;
 
-public class ImagePanel extends JPanel implements ActionListener {
+public class ImagePanel extends JPanel implements ActionListener, Action {
     JLabel imageContainerLabel;
     JLabel statusLabel;
     transient Path destinationPath;
@@ -39,7 +43,15 @@ public class ImagePanel extends JPanel implements ActionListener {
         JButton moveButton = new JButton("Move");
         add(moveButton, BorderLayout.PAGE_START);
         moveButton.addActionListener(this);
-        moveButton.setMnemonic(KeyEvent.VK_ENTER);
+
+        ImagePanel me = this;
+        moveButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Move");
+        moveButton.getActionMap().put("Move", new AbstractAction("Move") {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                me.actionPerformed(actionEvent);
+            }
+        });
 
         statusLabel = new JLabel("...");
         add(statusLabel, BorderLayout.PAGE_END);
