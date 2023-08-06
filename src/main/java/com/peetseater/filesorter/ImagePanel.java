@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
@@ -92,9 +93,14 @@ public class ImagePanel extends JPanel implements ActionListener {
         AppLogger.info("Moving file from " + currentImagePath + " to " + destinationPath);
         if (currentImagePath != null && destinationPath != null) {
             try {
-                // TODO handle duplicate name collision
-                Files.move(currentImagePath, destinationPath.resolve(currentImagePath.getFileName()), StandardCopyOption.ATOMIC_MOVE);
-                statusLabel.setText("Moved file to " + destinationPath.resolve(currentImagePath.getFileName()).toString());
+                Path desiredPath = destinationPath.resolve(currentImagePath.getFileName());
+                int next = 1;
+                while(Files.exists(desiredPath)) {
+                    destinationPath.resolve(next + "-" + currentImagePath.getFileName());
+                    next++;
+                }
+                Files.move(currentImagePath, desiredPath, StandardCopyOption.ATOMIC_MOVE);
+                statusLabel.setText("Moved file to " + desiredPath.toString());
                 for (Listener listener : listeners) {
                     listener.doListenerAction();
                 }
