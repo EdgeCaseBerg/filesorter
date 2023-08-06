@@ -33,7 +33,7 @@ public class DesktopApplication extends JFrame {
 
         add(jSplitPane);
 
-        setPreferredSize(new Dimension(1280, 720));
+        setPreferredSize(new Dimension(1440, 960));
 
         this.pack();
         // true = Forward add/setLayout calls to the rootPane

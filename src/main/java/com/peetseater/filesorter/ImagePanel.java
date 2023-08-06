@@ -23,7 +23,7 @@ import javax.swing.KeyStroke;
 
 import com.peetseater.AppLogger;
 
-public class ImagePanel extends JPanel implements ActionListener, Action {
+public class ImagePanel extends JPanel implements ActionListener {
     JLabel imageContainerLabel;
     JLabel statusLabel;
     transient Path destinationPath;
@@ -65,12 +65,20 @@ public class ImagePanel extends JPanel implements ActionListener, Action {
         AppLogger.info("Set source image to " + imagePath);
         this.currentImagePath = imagePath;
         ImageIcon newImage = new ImageIcon(Files.readAllBytes(imagePath));
-        imageContainerLabel.setIcon(scaleIcon(newImage, getWidth(), getHeight()));
+        int width = newImage.getIconWidth();
+        int height = newImage.getIconHeight();
+        int largest = Math.max(width, height);
+        if (largest == width) {
+            height = -1;
+        } else {
+            width = -1;
+        }
+        imageContainerLabel.setIcon(scaleIcon(newImage, Math.min(width, getWidth()), Math.min(height, getHeight())));
         statusLabel.setText(imagePath.toString());
     }
 
     private ImageIcon scaleIcon(ImageIcon imageIcon, int width, int height) {
-        Image scaledImage = imageIcon.getImage().getScaledInstance(width, -1, Image.SCALE_SMOOTH);
+        Image scaledImage = imageIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(scaledImage);
     }
 
