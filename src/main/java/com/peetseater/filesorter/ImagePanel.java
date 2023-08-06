@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,6 +39,7 @@ public class ImagePanel extends JPanel implements ActionListener {
         JButton moveButton = new JButton("Move");
         add(moveButton, BorderLayout.PAGE_START);
         moveButton.addActionListener(this);
+        moveButton.setMnemonic(KeyEvent.VK_ENTER);
 
         statusLabel = new JLabel("...");
         add(statusLabel, BorderLayout.PAGE_END);
