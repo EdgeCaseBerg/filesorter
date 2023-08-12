@@ -26,6 +26,8 @@ import com.peetseater.filesorter.FileToMove;
 public abstract class AbstractFileTreePanel extends JPanel implements ActionListener, FileVisitor<Path> {
 
     JButton browseButton = new JButton("Browse");
+    JButton refreshButton = new JButton("Refresh");
+    transient Path loadedPath = null;
     DefaultMutableTreeNode rootNode;
     JTree jTree;
     String browseText;
@@ -48,13 +50,21 @@ public abstract class AbstractFileTreePanel extends JPanel implements ActionList
         jTree.setEditable(false);
         jTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         jTree.setShowsRootHandles(true);
+
+        
         
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(browseButton);
+        JPanel buttonPanel = new JPanel();
+        BoxLayout sideBySideButtons = new BoxLayout(buttonPanel, BoxLayout.X_AXIS);
+        
+        buttonPanel.add(browseButton);
+        buttonPanel.add(refreshButton);
+        add(buttonPanel);
         add(scrollPane);
 
         browseButton.addActionListener(this);
+        refreshButton.addActionListener(this);
     }
 
     DefaultMutableTreeNode currentParent = rootNode;
@@ -77,9 +87,14 @@ public abstract class AbstractFileTreePanel extends JPanel implements ActionList
     @Override
     public void actionPerformed(ActionEvent e) {
         AppLogger.info("FileTreePanel with text \"" + browseText + "\" button clicked " + this.rootNode);
-        if (jFileChooser.showOpenDialog(this.getParent()) == JFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser.getSelectedFile();
-            this.loadPath(file.toPath());
+        if (e.getActionCommand().equals("Refresh")) {
+            this.loadPath(this.loadedPath);
+        } else if (e.getActionCommand().equals(this.browseText)) {
+            if (jFileChooser.showOpenDialog(this.getParent()) == JFileChooser.APPROVE_OPTION) {
+                File file = jFileChooser.getSelectedFile();
+                this.loadPath(file.toPath());
+                this.loadedPath = file.toPath();
+            }
         }
     }
 
