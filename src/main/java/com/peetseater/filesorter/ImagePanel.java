@@ -95,7 +95,7 @@ public class ImagePanel extends JPanel implements ActionListener {
                 Path desiredPath = destinationPath.resolve(currentImagePath.getFileName());
                 int next = 1;
                 while(Files.exists(desiredPath)) {
-                    destinationPath.resolve(next + "-" + currentImagePath.getFileName());
+                    desiredPath = destinationPath.resolve("copy-" + next + "-" + currentImagePath.getFileName());
                     next++;
                 }
                 Files.move(currentImagePath, desiredPath, StandardCopyOption.ATOMIC_MOVE);
